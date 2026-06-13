@@ -3,6 +3,7 @@
 - [x] CV(이력서) 및 Cover Letter(자기소개서) 개정 파일 작성
   - [x] 퇴사일 현행화 및 최근 AI 프로젝트(Steelworks Manager React/FastAPI 포팅) 추가
   - [x] AI 협업 및 초고속 마이그레이션 성과(24시간 내 14개 모듈 완성) 스토리텔링 적용
+  - [x] 나이(Age) 언급을 엔지니어에서 IT로의 커리어 전환(Career Transition)으로 수정 반영
   - [x] 파일 저장: [수정/수정_react_121_이력서및자기소개서수정.md](file:///f:/pe/public_html/steelworks-manager-react/수정/수정_react_121_이력서및자기소개서수정.md)
 - [x] 실제 웹 서비스 배포 가이드 문서 작성
   - [x] 사내 로컬 네트워크 배포 방안 명세 (정적 빌드 서빙)

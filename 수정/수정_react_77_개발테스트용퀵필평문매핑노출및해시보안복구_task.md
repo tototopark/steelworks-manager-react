@@ -1,0 +1,5 @@
+- [x] core/api_router.py 내 로그인 API의 1:1 해시 문자열 검증 우회 분기 제거 (보안 원상 복구)
+- [x] core/api_router.py 내 get_employees API에서 bcrypt.checkpw 연산을 사용하여 '12345678' 및 'dev12345' 해시 여부를 사전 판단하여 display 필드로 반환하도록 수정
+- [x] skills/200_admin_pipeline.py 내 개발자 편의용 일괄 해시 리셋 대상 평문 암호를 'dev12345'로 설정 및 갱신
+- [x] fe/src/app/login/page.js에서 백엔드가 결정한 password_display 및 autofill_password 값을 화면에 바인딩
+- [ ] 브라우저에서 'Reset to Hashed 12345678' 클릭 후, 로그인 페이지 퀵필에 'dev12345'가 평문으로 정확히 보이고 클릭 시 정상 로그인에 성공하는지 검증

@@ -1,0 +1,8 @@
+- [x] fe/src/app/dashboard/timesheet/page.js 클라이언트 사이드 즉시 CSV 내보내기 구현
+    - [x] handleExportCSV 함수를 API 호출에서 logs 배열을 직접 텍스트 인코딩하여 즉시 다운로드하는 클라이언트 로직으로 전면 교체
+- [x] fe/src/app/dashboard/admin-db/page.js ERD 다이어그램 드래그 및 휠 줌 기능 구현
+    - [x] scale, position, drag 상태 변수 추가
+    - [x] handleWheel, handleMouseDown, handleMouseMove, handleMouseUp 이벤트 핸들러 구현
+    - [x] 다이어그램 렌더링 컨테이너에 style transform 바인딩 및 이벤트 매핑
+    - [x] ERD 기본 렌더링 높이를 최대(min-height 750px 및 640px)로 시원하게 확장 완료
+- [x] 서비스 동작 테스트 및 수동 검증 완료

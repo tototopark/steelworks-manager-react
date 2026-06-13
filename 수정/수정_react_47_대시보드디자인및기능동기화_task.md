@@ -1,0 +1,6 @@
+- [x] useDashboard.js 수정: limit 파라미터를 100으로 변경하여 충분한 데이터 로드
+- [x] page.js (Dashboard) 수정: 3개 바로가기 카드 섹션 추가 (Active Jobs, Manage Staff, Punch Clock)
+- [x] page.js (Dashboard) 수정: 잡 번호 오름차순 정렬 로직 적용
+- [x] page.js (Dashboard) 수정: 최대 50개 페이지네이션(페이징) 기능 개발
+- [x] page.js (Dashboard) 수정: 블루/그린 진행률 바 및 완료 수량 분수비(예: 85% (17/20)) 텍스트 오버레이 디자인 구현
+- [x] npm run build 빌드 검증 및 테스트

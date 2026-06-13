@@ -1,0 +1,5 @@
+- [x] useJobs.js 훅 생성 (Job CRUD 및 도면/사진 관리 API 연동)
+- [x] useQA.js 훅 생성 (QA pending 및 합격/불합격 처리 API 연동)
+- [x] jobs/page.js 생성 (Job 생성, Ingest, 상세 리스트, 사진 업로드 뷰)
+- [x] qa-wip/page.js 생성 (Pending Job 목록, WIP 부재 리스트 및 품질 판정 기능)
+- [x] npm run build 빌드 검증 및 빌드 통과 확인

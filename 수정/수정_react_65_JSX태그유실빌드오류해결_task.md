@@ -1,0 +1,4 @@
+- [x] JSX 문법 에러 조치 계획 수립 완료
+- [x] 수정_react_65_JSX태그유실빌드오류해결_plan.md 작성 완료
+- [x] fe/src/app/dashboard/page.js 내 유실된 ')}' 태그 추가 완료
+- [x] 수정_react_65_JSX태그유실빌드오류해결_walkthrough.md 작성 완료

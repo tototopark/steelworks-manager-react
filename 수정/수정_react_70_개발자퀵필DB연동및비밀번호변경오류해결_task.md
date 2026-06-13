@@ -1,0 +1,4 @@
+- [x] api_router.py의 get_employees API에 password 칼럼 데이터가 반환되도록 SELECT 쿼리 보완
+- [x] fe/src/app/login/page.js 파일 내 Developer Account Quick-Fill 데이터 바인딩 시 DB에서 불러온 password가 default 인지 비교 연동
+- [x] DB 내 Aaron 계정 패스워드 재설정 ($2b$12$ 기본 해시값으로 리셋)
+- [x] 브라우저에서 Aaron 계정 패스워드 변경 절차 수행 후 변경 상태가 Quick-Fill 컴포넌트에 Changed 로 정확히 연동되는지 검증

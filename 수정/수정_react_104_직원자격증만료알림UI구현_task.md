@@ -1,0 +1,7 @@
+- [x] 백엔드 core/api_router.py 에 GET /api/reminders/staff/expiry-check API 추가
+- [x] fe/src/hooks/useStaffReminders.js 신규 커스텀 훅 개발
+- [x] fe/src/app/dashboard/employees/page.js 에 직원 자격증 만료 경고 박스 탑재
+- [x] fe/src/app/dashboard/page.js 대시보드 화면에 자격증 만료 경고 박스 연동
+- [x] _수정_react_46_1번과2번앱메뉴비교표.md 파일의 Reminder 항목 상태 업데이트
+- [x] Next.js 빌드 테스트를 통한 정상 작동 검증
+- [x] 수정_react_104_직원자격증만료알림UI구현_walkthrough.md 작성 및 완료 보고

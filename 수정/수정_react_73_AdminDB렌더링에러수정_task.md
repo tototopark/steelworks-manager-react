@@ -1,0 +1,2 @@
+- [x] fe/src/hooks/useAdminDB.js 내 fetchTables 성공 처리 시 응답 객체 배열을 단순 문자열 배열(tableNames)로 매핑해서 tables 상태를 할당하도록 교체
+- [x] 브라우저에서 Admin DB 메뉴를 재선택하여 React Children 에러 및 Key 중복 경고가 말끔하게 사라졌는지 검증

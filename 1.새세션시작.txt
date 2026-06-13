@@ -1,0 +1,13 @@
+수정작업은 
+F:\pe\public_html\steelworks-manager-react, 이 앱에 대해서만 진행한다.
+F:\pe\public_html\sitepro - 이것 최초 리거시 php 앱에서 
+F:\pe\public_html\steelworks-manager, 1차로 이것으로 마이그레이션 하였고, 트렌드를 반영하여 
+F:\pe\public_html\steelworks-manager-react, 1차를 바탕으로 2차로 이것을 작업중임.
+1차를 기반으로 진행하다 보니 아직 레거시에서 마이그레션 되어 있지 않는 것이 있었다. 그러니 다시 그것을 확인해줘.
+---
+F:\pe\public_html\steelworks-manager-react\수정, 이곳 파일을 읽어봐. 반복해서 확인했는데 아직 마이그레이션 되지 않은 것이 있음.
+그리고 완성한 것, 현재 진행중이거나, 향후 진행할 작업을 정리하고, 위에 말한 모든 것 포함하여 'F:\pe\public_html\steelworks-manager-react\미레세션_확인사항.txt'에다 작성해줘. 지금처럼 미래세션에서 이렇게 내가 다시 설명하지 않고 이 파일만 보고 작업 이어 갈 수 있도록 작성하자.
+
+### ===============
+
+'수정' 화일에서 로그인 화면 작업 확인해. 테스트중 작업을 쉽게 하기위해서 직원 리스트 화면에 보이고 클릭해서 쉽게 로그인 하고자 해서 수정했는데 없어졌다. 복구해줘.

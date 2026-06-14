@@ -101,7 +101,7 @@ export default function ResumePage() {
             Professional Summary
           </h2>
           <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
-            An agile IT and automation specialist fusing decades of industrial manufacturing and financial programming experience with modern AI-driven development. Expert at analyzing complex operational requirements and translating them into robust software logic. Highly adaptable to any development platform, with a proven track record of rapid prototyping and legacy software modernization (e.g., migrating a legacy enterprise PHP app into a Next.js/FastAPI stack in under 24 hours).
+            An agile IT and automation specialist fusing decades of industrial manufacturing and financial programming experience with modern AI-driven development. Expert at analyzing complex operational requirements and translating them into robust software logic. Highly adaptable to any development platform, with a proven track record of rapid prototyping, AI-human pair programming (co-developing with the Antigravity AI Agent), and legacy software modernization (e.g., migrating a legacy enterprise PHP app into a Next.js/FastAPI stack in under 24 hours).
           </p>
         </section>
 
@@ -154,7 +154,7 @@ export default function ResumePage() {
                 </div>
               </div>
               <ul className="list-disc list-inside text-zinc-400 text-xs sm:text-sm space-y-2 mt-2">
-                <li><strong className="text-zinc-300">Implementation</strong>: Completely rebuilt and modernized a legacy PHP tracking system into a Next.js 16 (React 19) and Python FastAPI stack in under 24 hours.</li>
+                <li><strong className="text-zinc-300">Implementation</strong>: Completely rebuilt and modernized a legacy PHP tracking system into a Next.js 16 (React 19) and Python FastAPI stack in under 24 hours via high-velocity AI-human pair programming with the Antigravity AI Agent.</li>
                 <li><strong className="text-zinc-300">Details</strong>: Developed 14 fully integrated modules including live timeline feeds, timesheet CSV exports, QA welding NCR logs, and database diagnostic ERD visualizers.</li>
                 <li><strong className="text-zinc-300">Outcome</strong>: Demonstrated extreme agility, domain logic translation, and the ability to deploy clean, modular FastAPI codebases in record time.</li>
               </ul>

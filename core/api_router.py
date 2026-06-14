@@ -69,3 +69,18 @@ app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
     return Response(status_code=204)
+
+# Serve resume static HTML directly to prevent 404 in static export routing
+@app.get("/resume", include_in_schema=False)
+async def serve_resume():
+    resume_path = os.path.join(static_dir, "resume.html")
+    if os.path.exists(resume_path):
+        with open(resume_path, "r", encoding="utf-8") as f:
+            return Response(content=f.read(), media_type="text/html")
+    # Fallback to subdirectory index if exists
+    alt_path = os.path.join(static_dir, "resume", "index.html")
+    if os.path.exists(alt_path):
+        with open(alt_path, "r", encoding="utf-8") as f:
+            return Response(content=f.read(), media_type="text/html")
+    return Response(content="Resume page not found.", status_code=404)
+

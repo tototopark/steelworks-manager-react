@@ -40,6 +40,8 @@ ENV SQLITE_DB_PATH=/app/data/steelworks.db
 
 # Ensure data directory exists
 RUN mkdir -p /app/data
+COPY data/steelworks.db /app/data/steelworks.db
+
 
 EXPOSE 3700
 

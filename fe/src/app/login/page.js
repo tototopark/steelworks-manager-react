@@ -118,7 +118,16 @@ export default function LoginPage() {
           <p className="mt-2 text-center text-sm text-zinc-400">
             Sign in to your account
           </p>
+          <div className="mt-4 flex justify-center">
+            <a 
+              href="/resume" 
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-900/50 hover:border-emerald-700 text-emerald-400 hover:text-white transition-all text-xs font-semibold"
+            >
+              💼 View Developer CV & Web Demo Info
+            </a>
+          </div>
         </div>
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="rounded-lg bg-red-950/50 border border-red-900 p-4 text-sm text-red-200 text-center">

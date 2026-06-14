@@ -48,6 +48,14 @@ export default function Header() {
       </div>
 
       <div className="flex items-center gap-4">
+        {/* CV Link for Hiring Managers */}
+        <a 
+          href="/resume" 
+          className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
+        >
+          View Developer CV
+        </a>
+
         {/* Alerts / Notifications */}
         <div className="relative cursor-pointer hover:bg-zinc-800 p-2 rounded-lg transition-all">
           <Bell className="w-5 h-5 text-zinc-400 hover:text-white" />
@@ -61,3 +69,4 @@ export default function Header() {
     </header>
   );
 }
+

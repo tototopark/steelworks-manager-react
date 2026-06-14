@@ -62,9 +62,6 @@ uploads_dir = os.path.join(static_dir, "uploads")
 os.makedirs(uploads_dir, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 
-# Mount StaticFiles as catch-all at the bottom
-app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
-
 # Empty favicon to avoid 404
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
@@ -75,13 +72,11 @@ async def favicon():
 async def serve_resume():
     resume_path = os.path.join(static_dir, "resume.html")
     if os.path.exists(resume_path):
-        with open(resume_path, "r", encoding="utf-8") as f:
-            return Response(content=f.read(), media_type="text/html")
+        return FileResponse(resume_path)
     # Fallback to subdirectory index if exists
     alt_path = os.path.join(static_dir, "resume", "index.html")
     if os.path.exists(alt_path):
-        with open(alt_path, "r", encoding="utf-8") as f:
-            return Response(content=f.read(), media_type="text/html")
+        return FileResponse(alt_path)
     return Response(content="Resume page not found.", status_code=404)
 
 # Serve login static HTML directly to prevent 404 upon sign out / redirect
@@ -89,13 +84,12 @@ async def serve_resume():
 async def serve_login():
     login_path = os.path.join(static_dir, "login.html")
     if os.path.exists(login_path):
-        with open(login_path, "r", encoding="utf-8") as f:
-            return Response(content=f.read(), media_type="text/html")
+        return FileResponse(login_path)
     # Fallback to subdirectory index if exists
     alt_path = os.path.join(static_dir, "login", "index.html")
     if os.path.exists(alt_path):
-        with open(alt_path, "r", encoding="utf-8") as f:
-            return Response(content=f.read(), media_type="text/html")
+        return FileResponse(alt_path)
     return Response(content="Login page not found.", status_code=404)
 
-
+# Mount StaticFiles as catch-all at the absolute bottom
+app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")

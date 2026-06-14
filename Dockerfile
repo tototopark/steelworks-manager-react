@@ -26,7 +26,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY core/ ./core/
 COPY configs/ ./configs/
 COPY skills/ ./skills/
+COPY tests/ ./tests/
 COPY run_api.py .
+
 
 # Copy frontend static build assets to the python static folder
 COPY --from=frontend-builder /app/fe/out/ ./static/

@@ -51,4 +51,7 @@ logs/*
 # Agent modifications tracking folder
 수정/
 
-
+# Local text notes and Korean guidelines at root
+/*.txt
+/gitPush.md
+/scratch/

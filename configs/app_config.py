@@ -10,11 +10,15 @@ import os
 DB_TYPE = "sqlite"  # Options: "sqlite", "mysql"
 
 # SQLite paths
-SQLITE_DB_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data",
-    "steelworks.db"
+SQLITE_DB_PATH = os.environ.get(
+    "SQLITE_DB_PATH",
+    os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        "data",
+        "steelworks.db"
+    )
 )
+
 
 # MySQL connection settings (For future migration)
 MYSQL_CONFIG = {

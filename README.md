@@ -4,6 +4,9 @@ Steelworks Manager is a modern, full-stack enterprise management system designed
 
 Developed by Eungsoon (Brian) Park.
 
+* **Live Web Demo**: [https://steelworks-manager-react.onrender.com](https://steelworks-manager-react.onrender.com)
+* **Interactive CV WebView**: [https://steelworks-manager-react.onrender.com/resume](https://steelworks-manager-react.onrender.com/resume)
+
 ---
 
 ## 1. The Developer Story: Fusing Domain Expertise with AI Vibe Coding

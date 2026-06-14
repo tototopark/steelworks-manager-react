@@ -51,8 +51,22 @@ async def get_employees(status: str = "active"):
                 emp["password_display"] = dev_pw
                 emp["autofill_password"] = dev_pw
             else:
-                emp["password_display"] = h
-                emp["autofill_password"] = h
+                # Dynamically check if the hash matches "dev12345"
+                is_dev_val = False
+                try:
+                    hash_str = h
+                    if hash_str.startswith("$2y$"):
+                        hash_str = hash_str.replace("$2y$", "$2b$", 1)
+                    is_dev_val = bcrypt.checkpw(b"dev12345", hash_str.encode('utf-8'))
+                except Exception:
+                    pass
+                
+                if is_dev_val:
+                    emp["password_display"] = "dev12345"
+                    emp["autofill_password"] = "dev12345"
+                else:
+                    emp["password_display"] = h
+                    emp["autofill_password"] = h
                 
         return {"status": "success", "data": employees}
     except Exception as e:

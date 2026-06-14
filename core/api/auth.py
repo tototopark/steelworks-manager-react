@@ -68,6 +68,8 @@ async def auth_login(payload: LoginRequest):
             try:
                 pw_bytes = payload.password.encode('utf-8')
                 db_hash = user['password']
+                if db_hash.startswith("$2y$"):
+                    db_hash = db_hash.replace("$2y$", "$2b$", 1)
                 if db_hash.endswith(":dev"):
                     db_hash = db_hash.split(":")[0]
                 hash_bytes = db_hash.encode('utf-8')

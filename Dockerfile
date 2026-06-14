@@ -44,5 +44,6 @@ RUN mkdir -p /app/data
 EXPOSE 3700
 
 # Command to boot the FastAPI application
-CMD python -c "import os; import sys; sys.path.append(os.path.abspath('.')); import tests.db_init as db_init; db_init.create_tables()" && \
+CMD python -c "import os; import sys; sys.path.append(os.path.abspath('.')); import tests.db_init as db_init; db_init.create_tables(); import skills.999_db_seeder as seeder; seeder.seed_database()" && \
     uvicorn core.api_router:app --host 0.0.0.0 --port ${PORT}
+

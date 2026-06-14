@@ -1,11 +1,12 @@
 # Multi-stage Dockerfile for Next.js (React) + FastAPI (Python) App
 # Stage 1: Build the Next.js Frontend
-FROM node:18-alpine AS frontend-builder
+FROM node:20-alpine AS frontend-builder
 WORKDIR /app/fe
 COPY fe/package*.json ./
 RUN npm install
 COPY fe/ ./
 RUN npm run build
+
 
 # Stage 2: Final Runner (Python Environment)
 FROM python:3.10-slim AS runner

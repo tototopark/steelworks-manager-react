@@ -8,6 +8,7 @@ import sys
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 # Set project root path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -27,8 +27,10 @@ yarn-error.log*
 
 # Databases (SQLite Local DB files)
 *.db
+!data/steelworks.db
 *.sqlite
 *.sqlite3
+
 
 # OS & IDE Settings
 .DS_Store

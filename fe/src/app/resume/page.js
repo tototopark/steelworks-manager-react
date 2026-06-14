@@ -1,20 +1,72 @@
 "use client";
 
 import Link from 'next/link';
-import { ArrowLeft, Briefcase, GraduationCap, Award, ExternalLink, Code } from 'lucide-react';
+import { ArrowLeft, Briefcase, GraduationCap, Award, ExternalLink, Code, Printer, Download } from 'lucide-react';
 
 export default function ResumePage() {
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans p-6 sm:p-12 md:p-16 flex flex-col items-center">
-      <div className="w-full max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sm:p-10 shadow-2xl">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans p-6 sm:p-12 md:p-16 flex flex-col items-center print:bg-white print:text-zinc-950 print:p-0">
+      
+      {/* Printable CSS Override */}
+      <style jsx global>{`
+        @media print {
+          body, html {
+            background-color: white !important;
+            color: #18181b !important;
+          }
+          .no-print {
+            display: none !important;
+          }
+          .print-card {
+            border: none !important;
+            background-color: white !important;
+            color: #18181b !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          .print-item {
+            background-color: #f4f4f5 !important;
+            border: 1px solid #e4e4e7 !important;
+            color: #18181b !important;
+          }
+          h1, h2, h3, h4, strong {
+            color: black !important;
+          }
+          a {
+            color: #059669 !important;
+            text-decoration: underline !important;
+          }
+        }
+      `}</style>
+
+      <div className="w-full max-w-4xl bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sm:p-10 shadow-2xl print-card">
         
         {/* Navigation / Header buttons */}
-        <div className="flex justify-between items-center mb-8 border-b border-zinc-800 pb-6">
+        <div className="flex justify-between items-center mb-8 border-b border-zinc-800 pb-6 no-print">
           <Link href="/login" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-all text-sm font-medium">
             <ArrowLeft className="w-4 h-4" />
             Back to Portal
           </Link>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
+            <button 
+              onClick={handlePrint}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-300 hover:text-white hover:border-zinc-700 transition-all text-xs font-semibold cursor-pointer"
+            >
+              <Printer className="w-3.5 h-3.5" />
+              Print / Save PDF
+            </button>
+            <a 
+              href="/Brian_Park_CV.md"
+              download="Brian_Park_CV.md"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-300 hover:text-white hover:border-zinc-700 transition-all text-xs font-semibold"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Download MD
+            </a>
             <a 
               href="https://github.com/tototopark" 
               target="_blank" 
@@ -26,6 +78,7 @@ export default function ResumePage() {
             </a>
           </div>
         </div>
+
 
         {/* Candidate Profile Header */}
         <div className="text-center sm:text-left flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10">

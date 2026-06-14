@@ -1,2 +1,0 @@
-- [x] core/api_router.py 파일 내 auth_login 함수에서 payload.password 가 user['password'] 해시 실데이터와 1:1 문자열로 완벽히 일치할 때 valid_password = True 분기 추가 적용
-- [x] 브라우저에서 Hashed 12345678 리셋 또는 커스텀 패스워드 해시를 그대로 지닌 퀵필을 클릭하여 로그인 요청 시, 401 오류를 건너뛰고 정상 로그인되는지 최종 테스트

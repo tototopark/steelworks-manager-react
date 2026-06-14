@@ -1,3 +1,0 @@
-- [x] 레거시 steelworks-manager 프로젝트의 tests 폴더 및 소스 파일 전체를 현재 steelworks-manager-react/tests 경로로 일괄 복사 복구
-- [x] tests/import_legacy.py 내의 sys.exit(1) 구문을 raise 에러 전달 구문으로 교체
-- [x] 브라우저에서 Migrate Legacy 버튼을 클릭하여 백엔드 크래시 및 모듈 미존재 에러 없이 200 OK 수신 및 이관 절차 정상 완료 검증

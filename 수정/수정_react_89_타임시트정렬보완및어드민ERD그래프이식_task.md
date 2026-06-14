@@ -1,7 +1,0 @@
-- [x] api_router.py 타임시트 펀치 로그 정렬 순서 보완
-    - [x] get_timesheet 정렬 규칙을 역순(-get_weekday_index(x), -x['id'])으로 변경
-- [x] page.js (admin-db) ERD Viewer 그래프 복원 및 탭 UI 추가
-    - [x] mermaid.js 연동 환경 구성 (Script 컴포넌트로 CDN mermaid 로드 및 초기화)
-    - [x] Data Explorer 및 ERD Diagram 탭 UI 복원
-    - [x] ERD Diagram 선택 시 Core Business ERD 렌더링
-- [x] 서비스 재시작 및 동작 테스트 완료

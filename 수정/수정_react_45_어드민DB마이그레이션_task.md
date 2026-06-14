@@ -1,3 +1,0 @@
-- [x] useAdminDB.js 훅 생성 (테이블 조회, 정밀 뷰, DB 점검/초기화 API 연동)
-- [x] admin-db/page.js 생성 (어드민 DB 점검 뷰, 테이블 리스트, 데이터 조회 기능)
-- [x] npm run build 빌드 검증 및 최종 빌드 통과 확인

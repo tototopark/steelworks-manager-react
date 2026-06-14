@@ -1,6 +1,0 @@
-- [x] 임시 비밀번호 및 일괄 리셋 버튼 수정 계획 수립 완료
-- [x] 수정_react_58_임시비밀번호로그인강제변경및일괄리셋버튼보완_plan.md 작성 완료
-- [x] fe/src/hooks/useAuth.js require_change 상태 대응 및 changePassword 기능 추가 완료
-- [x] fe/src/app/login/page.js 로그인 폼 새 비밀번호 변경 화면 분기 및 연동 완료
-- [x] fe/src/app/dashboard/admin-db/page.js 일괄 초기화 버튼 레이블 명시(Reset to 12345678) 완료
-- [x] 수정_react_58_임시비밀번호로그인강제변경및일괄리셋버튼보완_walkthrough.md 작성 완료

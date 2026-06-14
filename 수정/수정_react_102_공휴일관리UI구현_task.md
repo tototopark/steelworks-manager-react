@@ -1,6 +1,0 @@
-- [x] fe/src/hooks/useHolidays.js 신규 커스텀 훅 개발
-- [x] fe/src/app/dashboard/holidays/page.js 신규 공휴일 관리 UI 페이지 구현
-- [x] fe/src/components/common/Sidebar.js 에 Holidays 메뉴 연동 및 권한 제어
-- [x] _수정_react_46_1번과2번앱메뉴비교표.md 파일의 Holidays 섹션의 결과 보고 상태를 (최종 완료)로 업데이트
-- [x] Next.js 빌드 테스트를 통한 정상 동작 검증
-- [x] 수정_react_102_공휴일관리UI구현_walkthrough.md 작성 및 완료 보고

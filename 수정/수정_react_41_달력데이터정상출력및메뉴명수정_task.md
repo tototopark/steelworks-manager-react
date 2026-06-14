@@ -1,6 +1,0 @@
-- [x] 310_schedule_pipeline.py의 get_weekly_schedule 함수 반환 데이터 구조 수정 (plans_dict -> plans 평탄화)
-- [x] weekly-plan/page.js의 useCalendar 디스트럭처링 및 변수명 바인딩 수정 (employeesData, holidaysData 사용)
-- [x] Sidebar.js의 메뉴 명칭 변경 ('Weekly Plan' -> 'Monthly Plan')
-- [x] Header.js의 타이틀 매핑 명칭 변경 ('Weekly Plan' -> 'Monthly Plan')
-- [x] weekly-plan/page.js의 페이지 내부 타이틀 변경 ('Weekly Production Plan' -> 'Monthly Production Plan')
-- [x] npm run build 빌드 검증 및 수동 테스트

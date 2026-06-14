@@ -1,2 +1,0 @@
-- [x] skills/200_admin_pipeline.py의 migrate_legacy_data() 내부에서 reset_all_passwords() 호출 로직 제거 (패스워드 보존)
-- [x] 브라우저에서 'Migrate Legacy' 실행 후, 팝업 안내창에 패스워드가 보존되었다는 메세지가 정상 표출되는지 테스트

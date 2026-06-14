@@ -1,5 +1,0 @@
-- [x] skills/200_admin_pipeline.py 파일 내 평문 12345678 초기화 및 암호화 해시 12345678 초기화 비즈니스 로직 각각 추가
-- [x] core/api_router.py 파일 내 신규 reset_passwords_hashed 라우트 생성 및 로그인 인증 로직의 평문/해시 유기적 인증 분기 적용
-- [x] fe/src/hooks/useAdminDB.js 훅 내에 resetAllPasswordsHashed 통신 모듈 추가
-- [x] fe/src/app/dashboard/admin-db/page.js 파일 내 어드민 관리 툴박스에 두 종류의 초기화 액션 버튼(Plain / Hashed) 배치
-- [x] 브라우저에서 각각의 리셋 기능 실행 후 퀵필의 노출 문자 및 자동 입력 로그인 분기 로직 정상 여부 교차 검증

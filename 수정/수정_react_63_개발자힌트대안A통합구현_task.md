@@ -1,5 +1,0 @@
-- [x] 개발자 힌트 대안 A 통합 구현 계획 수립 완료
-- [x] 수정_react_63_개발자힌트대안A통합구현_plan.md 작성 완료
-- [x] fe/src/components/common/DevHints.js props 대응 구조 변경 완료
-- [x] fe/src/app/dashboard/page.js 에 DevHints 컴포넌트 이식 및 props 데이터 주입 완료
-- [x] 수정_react_63_개발자힌트대안A통합구현_walkthrough.md 작성 완료

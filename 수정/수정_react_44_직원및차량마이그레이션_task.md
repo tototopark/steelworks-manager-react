@@ -1,5 +1,0 @@
-- [x] useEmployees.js 훅 생성 (직원 CRUD, 임시 패스워드 발급, 아바타 업로드 연동)
-- [x] useVehicles.js 훅 생성 (차량 CRUD 및 만료 알림 API 연동)
-- [x] employees/page.js 생성 (직원 리스트, 아바타 변경, 정보 수정/삭제 기능)
-- [x] vehicles/page.js 생성 (차량 리스트, 만료 경보 배지 표시, 정보 수정/삭제 기능)
-- [x] npm run build 빌드 검증 및 최종 빌드 통과 확인

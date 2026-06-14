@@ -1,5 +1,0 @@
-- [x] passlib 의존성 우회를 위해 api_router.py의 password 검증 로직 점검 및 유지
-- [x] sqlite3 db 내 tb_login의 손상된 패스워드 해시값 복구 ($2b$12$ 해시값으로 일괄 갱신)
-- [x] 200_admin_pipeline.py의 reset_all_passwords() 메소드를 passlib 대신 순수 bcrypt 방식으로 수정
-- [x] api_router.py의 change_password, create_employee, generate_random_password 등 나머지 passlib 사용처도 순수 bcrypt 방식으로 변경
-- [x] 브라우저에서 Alison 등의 일반 사원 id로 로그인 테스트 및 정상 작동 확인

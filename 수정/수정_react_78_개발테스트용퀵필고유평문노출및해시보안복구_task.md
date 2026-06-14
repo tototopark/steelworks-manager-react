@@ -1,4 +1,0 @@
-- [x] skills/200_admin_pipeline.py의 reset_all_passwords_hashed() 메소드가 dev_[login]의 고유한 패스워드를 생성 및 해싱하도록 수정
-- [x] core/api_router.py의 get_employees API에서 bcrypt.checkpw를 사용해 12345678 및 사용자별 고유 패스워드(dev_[login]) 해시 상태를 감지하여 display 텍스트로 치환 반환하도록 업데이트
-- [x] fe/src/app/dashboard/admin-db/page.js 파일 내 어드민 초기화 액션 툴팁 정보 수정
-- [x] 브라우저에서 'Reset to Unique Hashed' 실행 후 퀵필 목록에서 각 아이디에 맞는 dev_[login] 평문 패스워드가 노출되고 이를 통해 로그인에 성공하는지 검증

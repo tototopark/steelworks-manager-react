@@ -48,3 +48,7 @@ static/uploads/avatars/*
 data/projects/*
 logs/*
 
+# Agent modifications tracking folder
+수정/
+
+

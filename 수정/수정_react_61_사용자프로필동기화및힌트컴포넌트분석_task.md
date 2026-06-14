@@ -1,5 +1,0 @@
-- [x] 사용자 성명 쿼리 동기화 및 힌트 컴포넌트 위치 분석 완료
-- [x] 수정_react_61_사용자프로필동기화및힌트컴포넌트분석_plan.md 작성 완료
-- [x] core/api_router.py 로그인 쿼리(firstname, surname 추가) 및 응답 포맷 수정 완료
-- [x] fe/src/app/dashboard/layout.js 내 DevHints 자동 노출 위치 확인 완료
-- [x] 수정_react_61_사용자프로필동기화및힌트컴포넌트분석_walkthrough.md 작성 완료

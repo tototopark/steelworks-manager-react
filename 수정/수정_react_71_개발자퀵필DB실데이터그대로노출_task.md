@@ -1,3 +1,0 @@
-- [x] fe/src/app/login/page.js 파일 내 Developer Account Quick-Fill 데이터 바인딩 시 DB에서 불러온 password 원본 텍스트를 그대로 출력하도록 수정
-- [x] Quick-Fill 항목 클릭 시, DB에서 가져온 패스워드 실데이터 값이 고스란히 로그인 비밀번호 필드에 입력되도록 바인딩
-- [x] 브라우저에서 변경된 Aaron 및 일반 계정이 DB 비밀번호 해시 그대로 화면에 노출되고 클릭 시 정상 입력되는지 최종 검증

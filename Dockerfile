@@ -29,7 +29,8 @@ COPY skills/ ./skills/
 COPY run_api.py .
 
 # Copy frontend static build assets to the python static folder
-COPY --from=frontend-builder /app/static/ ./static/
+COPY --from=frontend-builder /app/fe/out/ ./static/
+
 
 # Expose port (Cloud Run defaults to PORT environment variable)
 ENV PORT=3700

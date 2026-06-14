@@ -53,5 +53,7 @@ logs/*
 
 # Local text notes and Korean guidelines at root
 /*.txt
+!requirements.txt
 /gitPush.md
 /scratch/
+

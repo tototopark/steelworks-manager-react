@@ -39,7 +39,8 @@ export default function AdminDBPage() {
     cleanDatabase,
     resetAllPasswords,
     resetAllPasswordsHashed,
-    migrateLegacyData
+    migrateLegacyData,
+    randomizeNames
   } = useAdminDB();
  
   const [selectedTable, setSelectedTable] = useState('');
@@ -300,6 +301,24 @@ export default function AdminDBPage() {
           <div>
             <h3 className="text-xs font-bold text-white">Reset to Unique Hashed</h3>
             <p className="text-[10px] text-zinc-500 mt-0.5">Reset all passwords to unique dev_[login] (Bypass change)</p>
+          </div>
+        </button>
+
+        {/* Randomize Names */}
+        <button
+          onClick={() => triggerAction(
+            'randomize',
+            'Randomize Employee Names',
+            'This will replace all real employee first and last names with random English names. System accounts will be renamed Demo [Login]. Owner account (Brian) will be preserved. This is irreversible without re-migration.',
+            randomizeNames,
+            'Randomize Names'
+          )}
+          className="bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 rounded-xl p-4 text-left space-y-2 cursor-pointer transition-all flex flex-col justify-between"
+        >
+          <HelpCircle className="w-5 h-5 text-purple-400" />
+          <div>
+            <h3 className="text-xs font-bold text-white">Randomize Names</h3>
+            <p className="text-[10px] text-zinc-500 mt-0.5">Anonymize employee names for demo</p>
           </div>
         </button>
 

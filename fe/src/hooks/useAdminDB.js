@@ -125,6 +125,18 @@ export function useAdminDB() {
     }
   };
 
+  const randomizeNames = async () => {
+    try {
+      setError('');
+      const response = await apiClient.post('/api/admin/randomize_names');
+      return { success: response.data?.status === 'success', message: response.data?.message || 'Names randomized.' };
+    } catch (err) {
+      const msg = err.response?.data?.detail || 'Failed to randomize names.';
+      setError(msg);
+      return { success: false, message: msg };
+    }
+  };
+
   return {
     tables,
     tableData,
@@ -138,6 +150,7 @@ export function useAdminDB() {
     cleanDatabase,
     resetAllPasswords,
     resetAllPasswordsHashed,
-    migrateLegacyData
+    migrateLegacyData,
+    randomizeNames
   };
 }

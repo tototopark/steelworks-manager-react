@@ -25,15 +25,15 @@ MYSQL_CONFIG = {
     "host": "localhost",
     "user": "pengelly_jumbo",
     "password": "!a>6+Bfr82iB",
-    "database": "pengelly_jumbodra_DB"
+    "database": "jumbodra_DB"
 }
 
 # Legacy SQL path for migration (Relative path dynamic lookup)
 LEGACY_SQL_PATH = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-    "backup-8.15.2024_19-39-32_pengelly-111",
-    "mysql",
-    "pengelly_jumbodra_DB-Dev.sql"
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "data",
+    "legacy",
+    "jumbodra_DB.sql"
 )
 
 # Logging configuration

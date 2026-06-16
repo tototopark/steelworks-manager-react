@@ -1,8 +1,8 @@
 import re
 import os
 
-sql_path = r'F:\pe\public_html\backup-8.15.2024_19-39-32_pengelly-111\mysql\pengelly_jumbodra_DB-Dev.sql'
-output_path = r'F:\pe\public_html\steelworks-manager\test\schemas.txt'
+sql_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "legacy", "jumbodra_DB.sql")
+output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "tests", "schemas.txt")
 
 if not os.path.exists(sql_path):
     print("SQL file not found!")

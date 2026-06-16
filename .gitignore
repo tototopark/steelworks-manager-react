@@ -60,3 +60,7 @@ logs/*
 /gitPush.md
 /scratch/
 
+# Ignore database backups and diagnostic backups
+data/steelworks.db.bak_*
+data/steelworks_backup_*.db
+

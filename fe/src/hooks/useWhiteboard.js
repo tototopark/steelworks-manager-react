@@ -9,11 +9,11 @@ export function useWhiteboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const fetchTasks = useCallback(async (date = '') => {
+  const fetchTasks = useCallback(async (date = '', buffer = 3) => {
     try {
       setLoading(true);
       setError('');
-      const url = date ? `/api/tasks/active?date=${date}` : '/api/tasks/active';
+      const url = date ? `/api/tasks/active?date=${date}&buffer=${buffer}` : '/api/tasks/active';
       const response = await apiClient.get(url);
       if (response.data && response.data.status === 'success') {
         setTasksData(response.data.data || []);

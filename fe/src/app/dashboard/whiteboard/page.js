@@ -20,6 +20,7 @@ export default function WhiteboardPage() {
   const isReadOnly = user?.right_level < 6;
 
   const [filterDate, setFilterDate] = useState('');
+  const [dateBuffer, setDateBuffer] = useState(3);
   const [devConfig, setDevConfig] = useState({ devHints: false });
   
   // Modal states
@@ -41,8 +42,8 @@ export default function WhiteboardPage() {
   } = useWhiteboard();
 
   const loadTasks = useCallback(() => {
-    fetchTasks(filterDate);
-  }, [fetchTasks, filterDate]);
+    fetchTasks(filterDate, dateBuffer);
+  }, [fetchTasks, filterDate, dateBuffer]);
 
   useEffect(() => {
     loadTasks();
@@ -233,6 +234,32 @@ export default function WhiteboardPage() {
               </button>
             )}
           </div>
+
+          {filterDate && (
+            <div className="flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-1 text-xs font-semibold text-zinc-400">
+              <span className="px-2 text-[10px] text-zinc-500">Buffer:</span>
+              <button
+                onClick={() => setDateBuffer(1)}
+                className={`px-2.5 py-1 rounded text-[11px] transition-all cursor-pointer ${
+                  dateBuffer === 1
+                    ? 'bg-zinc-800 text-white font-bold border border-zinc-700'
+                    : 'hover:text-white'
+                }`}
+              >
+                1 Day
+              </button>
+              <button
+                onClick={() => setDateBuffer(3)}
+                className={`px-2.5 py-1 rounded text-[11px] transition-all cursor-pointer ${
+                  dateBuffer === 3
+                    ? 'bg-zinc-800 text-white font-bold border border-zinc-700'
+                    : 'hover:text-white'
+                }`}
+              >
+                3 Days
+              </button>
+            </div>
+          )}
 
           {!isReadOnly && (
             <button

@@ -28,7 +28,7 @@ class TaskUpdate(BaseModel):
     task_instruction: str
 
 @router.get("/api/tasks/active")
-async def get_active_tasks_api(date: Optional[str] = None):
+async def get_active_tasks_api(date: Optional[str] = None, buffer: Optional[int] = 3):
     try:
         from skills import _020_task_pipeline as task_pipeline
     except ImportError:
@@ -37,7 +37,7 @@ async def get_active_tasks_api(date: Optional[str] = None):
         
     try:
         if date:
-            tasks = task_pipeline.get_tasks_by_date(date)
+            tasks = task_pipeline.get_tasks_by_date(date, buffer_days=buffer)
         else:
             tasks = task_pipeline.get_active_tasks()
         return {"status": "success", "data": tasks}

@@ -98,16 +98,17 @@ def get_active_tasks():
     """
     return db_client.fetch_all(query)
 
-def get_tasks_by_date(target_date):
+def get_tasks_by_date(target_date, buffer_days=3):
     """
-    Retrieves tasks that were active on or around a specific historical date.
+    Retrieves tasks that were active on or around a specific historical date within buffer_days.
     """
     query = """
         SELECT t.id, t.site, t.task, t.employee, t.expiry_date
         FROM tb_tasks t
-        WHERE (t.expiry_date >= ? OR t.expiry_date IS NULL)
+        WHERE (t.expiry_date IS NULL 
+           OR (t.expiry_date >= date(?, '-' || ? || ' days') AND t.expiry_date <= date(?, '+' || ? || ' days')))
     """
-    return db_client.fetch_all(query, (target_date,))
+    return db_client.fetch_all(query, (target_date, buffer_days, target_date, buffer_days))
 
 def main():
     print("Running Task Pipeline verification test...")

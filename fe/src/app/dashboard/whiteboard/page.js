@@ -142,7 +142,7 @@ export default function WhiteboardPage() {
     // Update backend with new employee assignment
     const result = await updateTask(taskId, targetEmpId, sourceSite, sourceInst);
     if (result.success) {
-      loadTasks();
+      fetchTasks(filterDate, dateBuffer);
     }
   };
 
@@ -175,7 +175,7 @@ export default function WhiteboardPage() {
 
     if (result.success) {
       setIsModalOpen(false);
-      loadTasks();
+      fetchTasks(filterDate, dateBuffer);
     }
   };
 
@@ -183,7 +183,7 @@ export default function WhiteboardPage() {
     if (confirm('Are you sure you want to delete this task?')) {
       const result = await deleteTask(taskId);
       if (result.success) {
-        loadTasks();
+        fetchTasks(filterDate, dateBuffer);
       }
     }
   };

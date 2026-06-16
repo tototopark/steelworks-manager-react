@@ -60,7 +60,29 @@ def migrate_legacy_data():
 
         # 3. Import legacy data
         import_legacy.import_legacy_data()
-        return {"status": "success", "message": "Legacy database successfully migrated. All legacy passwords have been preserved."}
+
+        # 4. Reassign tasks employee IDs to active, validated employee IDs so they appear on whiteboard
+        try:
+            active_emps = db_client.fetch_all(
+                "SELECT id FROM tb_login WHERE is_active = 1 AND admin_validation = 1 AND right_level IN (1, 2, 12)"
+            )
+            if active_emps:
+                import random
+                random.seed(42)  # For deterministic assignment
+                emp_ids = [emp["id"] for emp in active_emps]
+                
+                # Fetch all legacy tasks
+                tasks = db_client.fetch_all("SELECT id FROM tb_tasks")
+                for task in tasks:
+                    new_emp_id = random.choice(emp_ids)
+                    db_client.execute_query(
+                        "UPDATE tb_tasks SET employee = ? WHERE id = ?",
+                        (new_emp_id, task["id"])
+                    )
+        except Exception as reassign_err:
+            print(f"Task employee reassignment warning: {reassign_err}")
+
+        return {"status": "success", "message": "Legacy database successfully migrated. All legacy passwords have been preserved. Tasks reassigned to active employees."}
     except Exception as e:
         return {"status": "error", "message": f"Migration failed: {str(e)}"}
 

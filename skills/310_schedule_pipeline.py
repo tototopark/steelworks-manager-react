@@ -79,8 +79,8 @@ def get_job_options():
     Returns active jobs and lots for the assignment dropdown.
     """
     try:
-        # Get active jobs
-        jobs = db_client.fetch_all("SELECT job_number, company_name FROM tb_jobs WHERE WIP_Completed = 0 ORDER BY job_number DESC")
+        # Get active jobs grouped by job_number to prevent key duplication in UI dropdowns
+        jobs = db_client.fetch_all("SELECT job_number, company_name FROM tb_jobs WHERE WIP_Completed = 0 GROUP BY job_number ORDER BY job_number DESC")
         return {"status": "success", "data": jobs}
     except Exception as e:
         return {"status": "error", "message": str(e)}

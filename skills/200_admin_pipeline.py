@@ -106,9 +106,6 @@ def shift_dates_to_today():
             today = datetime.date.today()
             offset_days = (today - anchor_date).days
 
-            if offset_days == 0:
-                return {"status": "success", "message": "Dates are already current. No shift needed."}
-
             offset_str = f"+{offset_days} days" if offset_days > 0 else f"{offset_days} days"
 
             # 2. Standard ISO date columns per table
@@ -143,7 +140,6 @@ def shift_dates_to_today():
                 "tb_production_plan": ["date_creation"],
                 "tb_public_holidays": ["date_start", "date_stop"],
                 "tb_reminder_other": ["expiry_date"],
-                "tb_tasks": ["expiry_date", "finished_date"],
                 "tb_week_notes": ["date"],
                 "tb_wip": ["inspection_date", "wip_version_date"],
                 "tb_export_data": ["export_date"],
@@ -152,57 +148,92 @@ def shift_dates_to_today():
             total_updated = 0
             log = []
 
-            for table, cols in DATE_COLUMNS.items():
-                for col in cols:
-                    try:
+            if offset_days != 0:
+                for table, cols in DATE_COLUMNS.items():
+                    for col in cols:
+                        try:
+                            cursor.execute(
+                                f"UPDATE {table} SET {col} = date({col}, ?) "
+                                f"WHERE {col} IS NOT NULL AND {col} != ''",
+                                (offset_str,)
+                            )
+                            n = cursor.rowcount
+                            if n > 0:
+                                log.append(f"{table}.{col}: {n} rows")
+                                total_updated += n
+                        except Exception as col_err:
+                            log.append(f"{table}.{col}: SKIP ({str(col_err)[:50]})")
+
+            # 2.5 tb_tasks: shift independently so the latest expiry_date matches today
+            try:
+                cursor.execute(
+                    "SELECT MAX(expiry_date) as max_date FROM tb_tasks "
+                    "WHERE expiry_date IS NOT NULL AND expiry_date != ''"
+                )
+                task_row = cursor.fetchone()
+                max_task_date_str = task_row["max_date"] if task_row else None
+                if max_task_date_str:
+                    max_task_date = datetime.date.fromisoformat(max_task_date_str)
+                    task_offset_days = (today - max_task_date).days
+                    if task_offset_days != 0:
+                        task_offset_str = f"+{task_offset_days} days" if task_offset_days > 0 else f"{task_offset_days} days"
                         cursor.execute(
-                            f"UPDATE {table} SET {col} = date({col}, ?) "
-                            f"WHERE {col} IS NOT NULL AND {col} != ''",
-                            (offset_str,)
+                            "UPDATE tb_tasks SET expiry_date = date(expiry_date, ?) "
+                            "WHERE expiry_date IS NOT NULL AND expiry_date != ''",
+                            (task_offset_str,)
                         )
-                        n = cursor.rowcount
-                        if n > 0:
-                            log.append(f"{table}.{col}: {n} rows")
-                            total_updated += n
-                    except Exception as col_err:
-                        log.append(f"{table}.{col}: SKIP ({str(col_err)[:50]})")
+                        n1 = cursor.rowcount
+                        cursor.execute(
+                            "UPDATE tb_tasks SET finished_date = date(finished_date, ?) "
+                            "WHERE finished_date IS NOT NULL AND finished_date != ''",
+                            (task_offset_str,)
+                        )
+                        n2 = cursor.rowcount
+                        if n1 + n2 > 0:
+                            log.append(f"tb_tasks.expiry_date: {n1} rows (offset {task_offset_days}d)")
+                            log.append(f"tb_tasks.finished_date: {n2} rows (offset {task_offset_days}d)")
+                            total_updated += (n1 + n2)
+            except Exception as task_err:
+                log.append(f"tb_tasks: SKIP ({str(task_err)[:50]})")
 
             # 3. tb_punchsheet: year/month/day/week stored as separate columns
-            MONTH_ABBR = ["Jan","Feb","Mar","Apr","May","Jun",
-                          "Jul","Aug","Sep","Oct","Nov","Dec"]
-            cursor.execute(
-                "SELECT id, year, month, day FROM tb_punchsheet "
-                "WHERE year IS NOT NULL AND month IS NOT NULL AND day IS NOT NULL"
-            )
-            punch_rows = cursor.fetchall()
-            punch_updated = 0
-            for pr in punch_rows:
-                try:
-                    mon_num = MONTH_ABBR.index(str(pr["month"])) + 1
-                    orig = datetime.date(int(pr["year"]), mon_num, int(pr["day"]))
-                    new_d = orig + datetime.timedelta(days=offset_days)
-                    new_week = int(new_d.strftime("%W"))
-                    cursor.execute(
-                        "UPDATE tb_punchsheet SET year=?, month=?, day=?, week=? WHERE id=?",
-                        (new_d.year, MONTH_ABBR[new_d.month - 1], new_d.day, new_week, pr["id"])
-                    )
-                    punch_updated += 1
-                except Exception:
-                    pass
-            if punch_updated > 0:
-                log.append(f"tb_punchsheet (year/month/day/week): {punch_updated} rows")
-                total_updated += punch_updated
+            if offset_days != 0:
+                MONTH_ABBR = ["Jan","Feb","Mar","Apr","May","Jun",
+                              "Jul","Aug","Sep","Oct","Nov","Dec"]
+                cursor.execute(
+                    "SELECT id, year, month, day FROM tb_punchsheet "
+                    "WHERE year IS NOT NULL AND month IS NOT NULL AND day IS NOT NULL"
+                )
+                punch_rows = cursor.fetchall()
+                punch_updated = 0
+                for pr in punch_rows:
+                    try:
+                        mon_num = MONTH_ABBR.index(str(pr["month"])) + 1
+                        orig = datetime.date(int(pr["year"]), mon_num, int(pr["day"]))
+                        new_d = orig + datetime.timedelta(days=offset_days)
+                        new_week = int(new_d.strftime("%W"))
+                        cursor.execute(
+                            "UPDATE tb_punchsheet SET year=?, month=?, day=?, week=? WHERE id=?",
+                            (new_d.year, MONTH_ABBR[new_d.month - 1], new_d.day, new_week, pr["id"])
+                        )
+                        punch_updated += 1
+                    except Exception:
+                        pass
+                if punch_updated > 0:
+                    log.append(f"tb_punchsheet (year/month/day/week): {punch_updated} rows")
+                    total_updated += punch_updated
 
             # 4. tb_jobs_dates.year (integer year column)
-            year_shift = today.year - anchor_date.year
-            if year_shift != 0:
-                cursor.execute(
-                    "UPDATE tb_jobs_dates SET year = year + ? WHERE year IS NOT NULL",
-                    (year_shift,)
-                )
-                n = cursor.rowcount
-                if n > 0:
-                    log.append(f"tb_jobs_dates.year (int): {n} rows")
+            if offset_days != 0:
+                year_shift = today.year - anchor_date.year
+                if year_shift != 0:
+                    cursor.execute(
+                        "UPDATE tb_jobs_dates SET year = year + ? WHERE year IS NOT NULL",
+                        (year_shift,)
+                    )
+                    n = cursor.rowcount
+                    if n > 0:
+                        log.append(f"tb_jobs_dates.year (int): {n} rows")
 
             conn.commit()
         finally:

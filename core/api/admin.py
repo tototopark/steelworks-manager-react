@@ -59,6 +59,19 @@ async def api_randomize_names():
         raise HTTPException(status_code=500, detail=res["message"])
     return res
 
+@router.post("/api/admin/shift_dates")
+async def api_shift_dates():
+    try:
+        from skills import _200_admin_pipeline as admin_pipeline
+    except ImportError:
+        admin_pipeline = importlib.import_module("skills.200_admin_pipeline")
+    importlib.reload(admin_pipeline)
+
+    res = admin_pipeline.shift_dates_to_today()
+    if res["status"] == "error":
+        raise HTTPException(status_code=500, detail=res["message"])
+    return res
+
 @router.get("/api/admin/db_inspect/tables")
 async def api_db_inspect_tables():
     try:

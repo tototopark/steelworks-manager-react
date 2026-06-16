@@ -137,6 +137,22 @@ export function useAdminDB() {
     }
   };
 
+  const shiftDatesToToday = async () => {
+    try {
+      setError('');
+      const response = await apiClient.post('/api/admin/shift_dates');
+      return {
+        success: response.data?.status === 'success',
+        message: response.data?.message || 'Dates shifted.',
+        details: response.data?.details
+      };
+    } catch (err) {
+      const msg = err.response?.data?.detail || 'Failed to shift dates.';
+      setError(msg);
+      return { success: false, message: msg };
+    }
+  };
+
   return {
     tables,
     tableData,
@@ -151,6 +167,7 @@ export function useAdminDB() {
     resetAllPasswords,
     resetAllPasswordsHashed,
     migrateLegacyData,
-    randomizeNames
+    randomizeNames,
+    shiftDatesToToday
   };
 }

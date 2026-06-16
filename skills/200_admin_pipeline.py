@@ -74,6 +74,150 @@ def reset_all_passwords():
     except Exception as e:
         return {"status": "error", "message": f"Failed to reset passwords: {str(e)}"}
 
+def shift_dates_to_today():
+    """
+    Shifts all date data in the DB forward so the latest record aligns with today.
+    1. Finds MAX(date_creation) in tb_jobs as the anchor date.
+    2. Calculates offset_days = today - anchor_date.
+    3. Updates all known date columns using SQLite date() arithmetic.
+    4. tb_punchsheet: year/month/day/week rebuilt from shifted date (special handling).
+    """
+    try:
+        import sqlite3
+        import datetime
+        from configs import app_config
+
+        conn = sqlite3.connect(app_config.SQLITE_DB_PATH)
+        conn.row_factory = sqlite3.Row
+        try:
+            cursor = conn.cursor()
+
+            # 1. Find anchor
+            cursor.execute(
+                "SELECT MAX(date_creation) as max_date FROM tb_jobs "
+                "WHERE date_creation IS NOT NULL AND date_creation != ''"
+            )
+            row = cursor.fetchone()
+            max_date_str = row["max_date"] if row else None
+            if not max_date_str:
+                return {"status": "error", "message": "No date data found in tb_jobs. Run migration first."}
+
+            anchor_date = datetime.date.fromisoformat(max_date_str)
+            today = datetime.date.today()
+            offset_days = (today - anchor_date).days
+
+            if offset_days == 0:
+                return {"status": "success", "message": "Dates are already current. No shift needed."}
+
+            offset_str = f"+{offset_days} days" if offset_days > 0 else f"{offset_days} days"
+
+            # 2. Standard ISO date columns per table
+            DATE_COLUMNS = {
+                "tb_jobs": [
+                    "date_creation", "date_last_update", "WIP_Completed_Date",
+                    "WIP_Issue_Date", "WIP_Revision_Date",
+                    "PAINT_CSP_DATE", "PAINT_ASB_DATE", "PAINT_MET_DATE",
+                    "PAINT_OTHER_DATE", "FASTENER_DATE"
+                ],
+                "tb_jobs_date_install": ["date_creation", "date_install"],
+                "tb_jobs_dates": [
+                    "inq_consented_plans", "rec_consented_plans",
+                    "inq_prenail_digital_files", "rec_prenail_digital_files",
+                    "inq_RFI", "rec_RFI",
+                    "inq_coating_schedule", "rec_coating_schedule",
+                    "inq_approval_archi", "rec_approval_archi",
+                    "inq_approval_engineers", "rec_approval_engineers",
+                    "inq_steel_purchase", "rec_steel_purchase",
+                    "inq_QA_doc", "rec_QA_doc",
+                    "inq_SSSP", "rec_SSSP",
+                    "inq_invoice", "rec_invoice"
+                ],
+                "tb_jobs_details": [
+                    "date_creation", "design_date_update", "approved_date",
+                    "made_date_update", "load_date_update", "on_site_date_update",
+                    "temp_fix_date_update", "chemset_date_update",
+                    "tightened_date_update", "finish_date_update"
+                ],
+                "tb_leaves": ["date_start", "date_stop"],
+                "tb_login": ["date_creation", "site_safe_exp_date"],
+                "tb_production_plan": ["date_creation"],
+                "tb_public_holidays": ["date_start", "date_stop"],
+                "tb_reminder_other": ["expiry_date"],
+                "tb_tasks": ["expiry_date", "finished_date"],
+                "tb_week_notes": ["date"],
+                "tb_wip": ["inspection_date", "wip_version_date"],
+                "tb_export_data": ["export_date"],
+            }
+
+            total_updated = 0
+            log = []
+
+            for table, cols in DATE_COLUMNS.items():
+                for col in cols:
+                    try:
+                        cursor.execute(
+                            f"UPDATE {table} SET {col} = date({col}, ?) "
+                            f"WHERE {col} IS NOT NULL AND {col} != ''",
+                            (offset_str,)
+                        )
+                        n = cursor.rowcount
+                        if n > 0:
+                            log.append(f"{table}.{col}: {n} rows")
+                            total_updated += n
+                    except Exception as col_err:
+                        log.append(f"{table}.{col}: SKIP ({str(col_err)[:50]})")
+
+            # 3. tb_punchsheet: year/month/day/week stored as separate columns
+            MONTH_ABBR = ["Jan","Feb","Mar","Apr","May","Jun",
+                          "Jul","Aug","Sep","Oct","Nov","Dec"]
+            cursor.execute(
+                "SELECT id, year, month, day FROM tb_punchsheet "
+                "WHERE year IS NOT NULL AND month IS NOT NULL AND day IS NOT NULL"
+            )
+            punch_rows = cursor.fetchall()
+            punch_updated = 0
+            for pr in punch_rows:
+                try:
+                    mon_num = MONTH_ABBR.index(str(pr["month"])) + 1
+                    orig = datetime.date(int(pr["year"]), mon_num, int(pr["day"]))
+                    new_d = orig + datetime.timedelta(days=offset_days)
+                    new_week = int(new_d.strftime("%W"))
+                    cursor.execute(
+                        "UPDATE tb_punchsheet SET year=?, month=?, day=?, week=? WHERE id=?",
+                        (new_d.year, MONTH_ABBR[new_d.month - 1], new_d.day, new_week, pr["id"])
+                    )
+                    punch_updated += 1
+                except Exception:
+                    pass
+            if punch_updated > 0:
+                log.append(f"tb_punchsheet (year/month/day/week): {punch_updated} rows")
+                total_updated += punch_updated
+
+            # 4. tb_jobs_dates.year (integer year column)
+            year_shift = today.year - anchor_date.year
+            if year_shift != 0:
+                cursor.execute(
+                    "UPDATE tb_jobs_dates SET year = year + ? WHERE year IS NOT NULL",
+                    (year_shift,)
+                )
+                n = cursor.rowcount
+                if n > 0:
+                    log.append(f"tb_jobs_dates.year (int): {n} rows")
+
+            conn.commit()
+        finally:
+            conn.close()
+
+        summary = (
+            f"Shifted all dates by {offset_days} days "
+            f"({anchor_date} -> {today}). "
+            f"{total_updated} total values updated."
+        )
+        return {"status": "success", "message": summary, "details": "\n".join(log)}
+
+    except Exception as e:
+        return {"status": "error", "message": f"Failed to shift dates: {str(e)}"}
+
 def randomize_names():
     """
     Replaces all real employee login/firstname/surname with random English names, and

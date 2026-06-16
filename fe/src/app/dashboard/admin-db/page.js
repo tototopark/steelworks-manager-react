@@ -40,7 +40,8 @@ export default function AdminDBPage() {
     resetAllPasswords,
     resetAllPasswordsHashed,
     migrateLegacyData,
-    randomizeNames
+    randomizeNames,
+    shiftDatesToToday
   } = useAdminDB();
  
   const [selectedTable, setSelectedTable] = useState('');
@@ -355,6 +356,24 @@ export default function AdminDBPage() {
           <div>
             <h3 className="text-xs font-bold text-white">Seed Database</h3>
             <p className="text-[10px] text-zinc-500 mt-0.5">Load dev test data</p>
+          </div>
+        </button>
+
+        {/* Sync Dates to Today */}
+        <button
+          onClick={() => triggerAction(
+            'shift_dates',
+            'Sync All Dates to Today',
+            'This will shift ALL date values in every table forward so the most recent record aligns with today. Punchsheet year/month/day/week will also be recalculated. Run once after migration to make recent-data searches work correctly.',
+            shiftDatesToToday,
+            'Shift Dates'
+          )}
+          className="bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 rounded-xl p-4 text-left space-y-2 cursor-pointer transition-all flex flex-col justify-between"
+        >
+          <RefreshCcw className="w-5 h-5 text-blue-400" />
+          <div>
+            <h3 className="text-xs font-bold text-white">Sync Dates to Today</h3>
+            <p className="text-[10px] text-zinc-500 mt-0.5">Shift all DB dates to current time</p>
           </div>
         </button>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useWhiteboard } from '../../../hooks/useWhiteboard';
 import { 
   Plus, 
@@ -41,37 +41,44 @@ export default function WhiteboardPage() {
     deleteTask,
   } = useWhiteboard();
 
-  const loadTasks = useCallback(() => {
-    fetchTasks(filterDate, dateBuffer);
-  }, [fetchTasks, filterDate, dateBuffer]);
-
+  // Single initialization: fetch default date, then load tasks once
   useEffect(() => {
-    loadTasks();
-  }, [loadTasks]);
+    let cancelled = false;
 
-  // Fetch default active date if empty on mount
-  useEffect(() => {
-    if (!filterDate) {
-      apiClient.get('/api/tasks/active-date')
-        .then(res => {
-          if (res.data && res.data.status === 'success' && res.data.date) {
-            setFilterDate(res.data.date);
+    const init = async () => {
+      let dateToUse = filterDate;
+
+      // Only fetch default date if filterDate is not set
+      if (!dateToUse) {
+        try {
+          const res = await apiClient.get('/api/tasks/active-date');
+          if (!cancelled && res.data?.status === 'success' && res.data.date) {
+            dateToUse = res.data.date;
+            setFilterDate(dateToUse);
           }
-        })
-        .catch(err => console.error("Failed to load default active date", err));
-    }
-  }, []);
-
-  // Load dev config
-  useEffect(() => {
-    apiClient.get('/api/config/dev_features')
-      .then(res => {
-        if (res.data && res.data.status === 'success') {
-          setDevConfig({ devHints: res.data.dev_hints });
+        } catch (err) {
+          console.error('Failed to load default active date', err);
         }
-      })
-      .catch(err => console.error("Failed to load dev config", err));
-  }, []);
+      }
+
+      if (!cancelled) {
+        fetchTasks(dateToUse, dateBuffer);
+      }
+    };
+
+    init();
+    return () => { cancelled = true; };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Re-fetch when filter or buffer changes (but NOT on first mount - handled above)
+  const isFirstMount = React.useRef(true);
+  useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+    fetchTasks(filterDate, dateBuffer);
+  }, [filterDate, dateBuffer, fetchTasks]);
 
   // Dev testing random active date helper
   const handleRandomDateJump = async () => {

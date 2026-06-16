@@ -1,0 +1,7 @@
+- [x] 백엔드 core/api_router.py 에 GET /api/activity API 엔드포인트 신설
+- [x] fe/src/hooks/useActivity.js 신규 커스텀 훅 개발
+- [x] fe/src/app/dashboard/activity/page.js 실시간 가동 로그 UI 개발
+- [x] fe/src/components/common/Sidebar.js 에 Activity 메뉴 항목 추가
+- [x] _수정_react_46_1번과2번앱메뉴비교표.md 파일의 Activity 항목 상태 업데이트
+- [x] Next.js 빌드 테스트 진행 및 정상 구동 검증
+- [x] 수정_react_103_실시간가동로그UI구현_walkthrough.md 작성 및 완료 보고

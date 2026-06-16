@@ -1,0 +1,5 @@
+- [x] 비밀번호 확인 2차 입력 검증 계획 수립 완료
+- [x] 수정_react_59_임시비밀번호변경확인패스워드일치검증_plan.md 작성 완료
+- [x] fe/src/app/login/page.js confirmPassword 상태와 입력 필드 추가 완료
+- [x] handleSubmit 내에 비밀번호 불일치 예외 처리 차단 완료
+- [x] 수정_react_59_임시비밀번호변경확인패스워드일치검증_walkthrough.md 작성 완료

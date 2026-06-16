@@ -1,0 +1,5 @@
+- [x] 사용자 성명 및 ID 노출 개선 계획 수립 완료
+- [x] 수정_react_60_사용자성명및로그인ID동시노출보완_plan.md 작성 완료
+- [x] fe/src/app/dashboard/page.js Welcome back 텍스트를 성명 및 ID 결합형으로 변경 완료
+- [x] fe/src/components/common/Sidebar.js 프로필 영역 내 로그인 ID 출력란 추가 완료
+- [x] 수정_react_60_사용자성명및로그인ID동시노출보완_walkthrough.md 작성 완료

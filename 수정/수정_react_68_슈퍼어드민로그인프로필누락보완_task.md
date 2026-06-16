@@ -1,0 +1,4 @@
+- [x] 슈퍼 어드민 로그인 프로필 누락 보완 계획 수립 완료
+- [x] 수정_react_68_슈퍼어드민로그인프로필누락보완_plan.md 작성 완료
+- [x] core/api_router.py Super Admin Fallback 성공 응답에 user 객체 정보 세팅 완료
+- [x] 수정_react_68_슈퍼어드민로그인프로필누락보완_walkthrough.md 작성 완료

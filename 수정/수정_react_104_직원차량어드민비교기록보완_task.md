@@ -1,0 +1,6 @@
+- [x] _수정_react_46_1번과2번앱메뉴비교표.md 파일에 Employees (6번), Vehicles (7번) 세부 비교 및 결과 보고 추가
+- [x] Holidays (8번) 백엔드 연동 현황 및 프론트엔드 UI 화면 부재 격차 분석 명시
+- [x] Punch Clock (9번) Live NZ Clock 기반 원클릭 출퇴근 및 Timesheet 연동 완료 이력 최신화
+- [x] Admin DB (10번) Super Admin 전용 보안 가드, ERD 시각화, 무결성 툴킷 완료 보고 추가
+- [x] 3번 섹션 레거시 전체 메뉴 상세 기능 일람의 미구현 사항(Activity 누락, Reminder 차량만 완료) 상태 갱신
+- [x] Next.js 프로젝트 빌드 정상 가동 여부 검증

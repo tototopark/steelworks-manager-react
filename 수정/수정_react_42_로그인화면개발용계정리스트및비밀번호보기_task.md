@@ -1,0 +1,6 @@
+- [x] login/page.js 수정: 상태 관리 필드 추가 (showPassword, devConfig, employees)
+- [x] login/page.js 수정: useEffect를 통한 dev_features 및 employees 로드 로직 구현
+- [x] login/page.js 수정: 패스워드 보기 토글 기능 추가 (Eye/EyeOff 아이콘 배치)
+- [x] login/page.js 수정: devHints 조건 만족 시 화면 하단에 퀵필 계정 리스트 렌더링 구현
+- [x] login/page.js 수정: autoFill 동작 조건 충족 시 필드 자동 바인딩 로직 구현
+- [x] npm run build 빌드 검증 및 테스트

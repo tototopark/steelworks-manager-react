@@ -1,0 +1,4 @@
+- [x] _수정_react_46_1번과2번앱메뉴비교표.md 파일 검토 및 백업본 확인
+- [x] _수정_react_46_1번과2번앱메뉴비교표.md에 Holidays, Activity, Staff Reminder 관련 미비점 상세 내용 업데이트 (기존 내용 훼손 없이 추가 및 보완)
+- [x] 전체 빌드 검증 및 렌더링 확인 (Next.js 빌드 성공 확인 완료)
+- [x] 수정_react_101_전체비교결과보고보완_walkthrough.md 작성

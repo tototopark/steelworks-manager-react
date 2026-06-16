@@ -43,9 +43,9 @@ LOG_FILE_PATH = os.path.join(
     "pipeline.log"
 )
 
-# UI feature flags
-AUTO_FILL_ENABLED = True
-SHOW_DEV_HINTS = True
+# UI feature flags and Developer Tools Configuration
+AUTO_FILL_ENABLED = True  # Automatically fills default credentials (admin/12345678) in the LoginPage.js for rapid testing
+SHOW_DEV_HINTS = True     # Shows the Developer Hints (DevHints.js) panel containing active hooks, files, and queries at the bottom of each page
 
 # Super Admin Fallback (Emergency access bypassing DB)
 ENABLE_SUPER_ADMIN = True

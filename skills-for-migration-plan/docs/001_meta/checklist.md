@@ -1,0 +1,16 @@
+- [x] Canonical repo policy files were added.
+- [x] Folder and file-size rules were defined for the new project direction.
+- [x] Backend-first and docs-first workflow was set as the default.
+- [x] Write the first structure migration design doc.
+- [x] Define the code migration quality gate workflow.
+- [x] Inventory the legacy entrypoints and page families.
+- [x] Build the detailed legacy family index.
+- [x] Build the 1:1 mapping table for Gate 1.
+- [x] Expand Gate 1 into file-level mapping for the largest families.
+- [x] Record edge cases and compatibility rules.
+- [x] Define the first backend boundary to migrate.
+- [x] Define the first SQLite schema with MySQL-safe types.
+- [x] Define the first API contract for the frontend.
+- [x] Decide which legacy PHP files stay as compatibility wrappers.
+- [x] Add smoke tests for the first end-to-end path.
+- [x] Align design and log numbering one-to-one.

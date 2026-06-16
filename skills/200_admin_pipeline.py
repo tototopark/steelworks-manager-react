@@ -76,24 +76,31 @@ def reset_all_passwords():
 
 def randomize_names():
     """
-    Replaces all real employee first/last names with random English names to protect privacy.
-    - System accounts (admin, developer, etc.) -> Demo [Login]
-    - Brian/Eungsoon -> Eungsoon (Brian) Park (preserved for owner demo)
-    - All others -> randomly assigned English names (deterministic seed for consistency)
-    Uses a single DB connection for performance.
+    Replaces all real employee login/firstname/surname with random English names, and
+    regenerates the password as bcrypt(dev_[new_login]) to keep Quick-Fill working.
+    - System accounts (admin etc.) -> login unchanged, firstname=Demo [Login]
+    - Owner account (Brian/Eungsoon/id=92) -> preserved as-is
+    - All others -> unique fake login + firstname + surname + new bcrypt password
+    Uses a single DB connection. Deterministic seed for consistency.
     """
     try:
         import random
         import sqlite3
+        import bcrypt
         from configs import app_config
 
-        FIRSTNAMES = [
-            "James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph", "Thomas", "Charles",
-            "Christopher", "Daniel", "Matthew", "Anthony", "Mark", "Donald", "Steven", "Paul", "Andrew", "Joshua",
-            "Kenneth", "Kevin", "Brian", "George", "Edward", "Ronald", "Timothy", "Jason", "Jeffrey", "Ryan",
-            "Jacob", "Gary", "Nicholas", "Eric", "Jonathan", "Stephen", "Larry", "Justin", "Scott", "Brandon",
-            "Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen",
-            "Nancy", "Lisa", "Betty", "Margaret", "Sandra", "Ashley", "Kimberly", "Emily", "Donna", "Michelle"
+        # Unique fake first names used as both login and firstname
+        FAKE_NAMES = [
+            "Aaron", "Adam", "Alan", "Albert", "Alex", "Alfred", "Andrew", "Anthony", "Arthur", "Austin",
+            "Benjamin", "Bernard", "Billy", "Bobby", "Bradley", "Brandon", "Brian", "Bruce", "Bryan", "Carl",
+            "Charles", "Christian", "Christopher", "Clifford", "Colin", "Curtis", "Dale", "Daniel", "David", "Dennis",
+            "Derek", "Donald", "Douglas", "Dylan", "Edward", "Eric", "Eugene", "Frank", "Frederick", "Gary",
+            "George", "Gerald", "Glenn", "Gordon", "Graham", "Gregory", "Harold", "Harry", "Henry", "Howard",
+            "Ian", "Jack", "Jacob", "James", "Jason", "Jeffrey", "Jeremy", "Joel", "John", "Jonathan",
+            "Joseph", "Joshua", "Justin", "Keith", "Kenneth", "Kevin", "Kyle", "Larry", "Lawrence", "Leonard",
+            "Louis", "Lucas", "Mark", "Martin", "Matthew", "Michael", "Nathan", "Nicholas", "Patrick", "Paul",
+            "Peter", "Philip", "Ralph", "Raymond", "Richard", "Robert", "Roger", "Ronald", "Roy", "Russell",
+            "Ryan", "Samuel", "Scott", "Sean", "Simon", "Stephen", "Steven", "Thomas", "Timothy", "Walter"
         ]
         SURNAMES = [
             "Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez",
@@ -104,13 +111,18 @@ def randomize_names():
         ]
         SYSTEM_LOGINS = {'admin', 'developer', 'superadmin', 'usershop', 'useroffice', 'useraccountant', 'usertruck', 'useronsite'}
 
-        random.seed(42)  # Deterministic: same output each time
+        random.seed(42)
+
+        # Shuffle name pool to guarantee uniqueness (no repeat logins)
+        name_pool = FAKE_NAMES.copy()
+        random.shuffle(name_pool)
+        name_idx = 0
 
         conn = sqlite3.connect(app_config.SQLITE_DB_PATH)
         conn.row_factory = sqlite3.Row
         try:
             cursor = conn.cursor()
-            cursor.execute("SELECT id, login, firstname, surname FROM tb_login")
+            cursor.execute("SELECT id, login FROM tb_login")
             users = [dict(row) for row in cursor.fetchall()]
 
             updated = 0
@@ -119,28 +131,40 @@ def randomize_names():
                 uid = u["id"]
 
                 if login.lower() in SYSTEM_LOGINS:
-                    new_first = "Demo"
-                    new_last = login.capitalize()
+                    # Keep login, only update display name
+                    cursor.execute(
+                        "UPDATE tb_login SET firstname=?, surname=? WHERE id=?",
+                        ("Demo", login.capitalize(), uid)
+                    )
                 elif login.lower() in ("brian", "eungsoon") or uid == 92:
-                    new_first = "Eungsoon (Brian)"
-                    new_last = "Park"
+                    # Owner account: preserve everything
+                    pass
                 else:
-                    new_first = random.choice(FIRSTNAMES)
+                    # Assign a unique fake name from pool
+                    if name_idx >= len(name_pool):
+                        name_idx = 0  # Safety wrap-around
+                    new_login = name_pool[name_idx]
+                    name_idx += 1
+                    new_first = new_login
                     new_last = random.choice(SURNAMES)
+                    # New password: bcrypt(dev_[new_login]) + :dev marker
+                    plain_pw = f"dev_{new_login}"
+                    hashed_pw = bcrypt.hashpw(plain_pw.encode("utf-8"), bcrypt.gensalt(rounds=10)).decode("utf-8") + ":dev"
+                    cursor.execute(
+                        "UPDATE tb_login SET login=?, firstname=?, surname=?, password=? WHERE id=?",
+                        (new_login, new_first, new_last, hashed_pw, uid)
+                    )
 
-                cursor.execute(
-                    "UPDATE tb_login SET firstname=?, surname=? WHERE id=?",
-                    (new_first, new_last, uid)
-                )
                 updated += 1
 
             conn.commit()
         finally:
             conn.close()
 
-        return {"status": "success", "message": f"All {updated} employee names have been replaced with randomized names. Privacy protected."}
+        return {"status": "success", "message": f"All {updated} employee accounts have been anonymized. Login, name, and password all updated."}
     except Exception as e:
         return {"status": "error", "message": f"Failed to randomize names: {str(e)}"}
+
 
 def reset_all_passwords_hashed():
     """

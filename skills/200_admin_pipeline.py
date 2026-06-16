@@ -10,7 +10,6 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from core import db_client
-from passlib.context import CryptContext
 
 TABLE_METADATA = {
     "tb_export_data": {"desc": "Exported data records for external systems", "rel": "None"},
@@ -33,8 +32,6 @@ TABLE_METADATA = {
     "tb_wip": {"desc": "Work in progress & QA inspection records", "rel": "N:1 with tb_jobs"}
 }
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 def migrate_legacy_data():
     """
     Triggers the legacy migration script logic. Preserves legacy database passwords exactly as-is.
@@ -48,6 +45,7 @@ def migrate_legacy_data():
         from tests import import_legacy
 
         # Reload modules to ensure latest changes are applied
+        importlib.reload(app_config)
         importlib.reload(db_init)
         importlib.reload(import_legacy)
 
@@ -79,18 +77,35 @@ def reset_all_passwords():
 def reset_all_passwords_hashed():
     """
     Resets all employee passwords to hashed unique passwords based on their login (e.g., 'dev_' + login).
+    Uses a single DB connection for the full loop to avoid repeated open/close overhead.
+    bcrypt rounds=10 is used (vs default 12) to keep computation time manageable on low-CPU hosts.
     """
     try:
         import bcrypt
-        # Fetch all employee IDs and logins
-        users = db_client.fetch_all("SELECT id, login FROM tb_login")
-        for u in users:
-            plain_pw = f"dev_{u['login']}"
-            hashed_pw = bcrypt.hashpw(plain_pw.encode('utf-8'), bcrypt.gensalt()).decode("utf-8") + ":dev"
-            db_client.execute_query("UPDATE tb_login SET password = ? WHERE id = ?", (hashed_pw, u['id']))
-        return {"status": "success", "message": "All passwords have been reset to unique hashed 'dev_[login]' values."}
+        from core import db_client as _db
+        import sqlite3
+        from configs import app_config
+
+        conn = sqlite3.connect(app_config.SQLITE_DB_PATH)
+        conn.row_factory = sqlite3.Row
+        try:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, login FROM tb_login")
+            users = [dict(row) for row in cursor.fetchall()]
+
+            for u in users:
+                plain_pw = f"dev_{u['login']}"
+                hashed_pw = bcrypt.hashpw(plain_pw.encode('utf-8'), bcrypt.gensalt(rounds=10)).decode("utf-8") + ":dev"
+                cursor.execute("UPDATE tb_login SET password = ? WHERE id = ?", (hashed_pw, u['id']))
+
+            conn.commit()
+        finally:
+            conn.close()
+
+        return {"status": "success", "message": f"All {len(users)} passwords have been reset to unique hashed 'dev_[login]' values."}
     except Exception as e:
         return {"status": "error", "message": f"Failed to reset passwords: {str(e)}"}
+
 
 def get_tables_list():
     """

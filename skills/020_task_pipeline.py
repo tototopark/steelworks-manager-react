@@ -95,7 +95,6 @@ def get_active_tasks():
     query = """
         SELECT t.id, t.site, t.task, t.employee, t.expiry_date
         FROM tb_tasks t
-        WHERE t.finished IS NULL OR t.finished = 0
     """
     return db_client.fetch_all(query)
 
@@ -106,10 +105,9 @@ def get_tasks_by_date(target_date):
     query = """
         SELECT t.id, t.site, t.task, t.employee, t.expiry_date
         FROM tb_tasks t
-        WHERE (t.finished IS NULL OR t.finished = 0 OR t.finished_date >= ?)
-          AND (t.expiry_date >= ? OR t.expiry_date IS NULL)
+        WHERE (t.expiry_date >= ? OR t.expiry_date IS NULL)
     """
-    return db_client.fetch_all(query, (target_date, target_date))
+    return db_client.fetch_all(query, (target_date,))
 
 def main():
     print("Running Task Pipeline verification test...")

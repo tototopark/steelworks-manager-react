@@ -18,8 +18,10 @@ Brian Park spent over two decades in New Zealand's structural engineering indust
 
 Following the economic downturn in Auckland in late 2025, Brian transitioned his focus to IT and systems automation. Having previously designed and contributed to a legacy PHP-based production tracking app used in real-world fabrication yards, Brian took on the challenge of rewriting and upgrading the system into a modern, production-ready React and FastAPI stack.
 
-### The AI Synergy (Vibe Coding)
-Using AI coding assistants (Gemini and Claude) under a vibe coding model, Brian was able to complete this enterprise-grade migration—including modern state management, high-performance API routers, database diagnostic consoles, and print-ready quality reporting modules—in a fraction of the time a traditional development cycle would require. This project stands as proof of his ability to analyze complex requirements, design robust databases, and rapidly deploy software using the latest AI methodologies.
+### The Migration Planning & AI Synergy (Vibe Coding)
+Instead of a simple code rewrite, Brian architected a **4-Phase Hybrid Migration Strategy** (documented in [skills-for-migration-plan/docs/002_design/](file:///f:/pe/public_html/steelworks-manager-react/skills-for-migration-plan/docs/002_design/)) before moving any logic. The migration blueprint covered structural boundary mapping, schema transition, and API compatibility strategies. 
+
+Using AI coding assistants (Gemini and Claude) under a vibe coding model, Brian implemented this design with advanced validation "Quality Gates" to guarantee zero data loss and automated dynamic mapping for active shopfloor logins. The migration—including modern state management, high-performance API routers, database diagnostic consoles, and print-ready quality reporting modules—was completed in record time. This project stands as proof of his ability to analyze complex domain requirements, plan robust architectures, and rapidly deploy software using the latest AI methodologies.
 
 ---
 

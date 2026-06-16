@@ -154,9 +154,11 @@ export default function ResumePage() {
                 </div>
               </div>
               <ul className="list-disc list-inside text-zinc-400 text-xs sm:text-sm space-y-2 mt-2">
-                <li><strong className="text-zinc-300">Implementation</strong>: Completely rebuilt and modernized a legacy PHP tracking system into a Next.js 16 (React 19) and Python FastAPI stack in under 24 hours via high-velocity AI-human pair programming with the Antigravity AI Agent.</li>
+                <li><strong className="text-zinc-300">Implementation</strong>: Completely migrated and modernized a legacy enterprise PHP tracking system into a Next.js/FastAPI stack. Designed the migration blueprint and executed it via high-velocity AI-human pair programming with the Antigravity AI Agent.</li>
+                <li><strong className="text-zinc-300">Migration Architecture Planning</strong>: Created a comprehensive 4-phase hybrid migration blueprint covering legacy boundary mapping, schema transition matrices, and API compatibility strategies to guarantee zero-downtime transition.</li>
+                <li><strong className="text-zinc-300">Quality Gate & Data Integrity</strong>: Formulated automated database validation routines to resolve duplicate React key anomalies and automated real-time dynamic remapping of legacy data relationships (e.g. mapping legacy employee IDs to active randomized profiles).</li>
                 <li><strong className="text-zinc-300">Details</strong>: Developed 14 fully integrated modules including live timeline feeds, timesheet CSV exports, QA welding NCR logs, and database diagnostic ERD visualizers.</li>
-                <li><strong className="text-zinc-300">Outcome</strong>: Demonstrated extreme agility, domain logic translation, and the ability to deploy clean, modular FastAPI codebases in record time.</li>
+                <li><strong className="text-zinc-300">Outcome</strong>: Successfully demonstrated advanced system architecture design, data integrity mitigation, and rapid agile full-stack modernization.</li>
               </ul>
             </div>
 

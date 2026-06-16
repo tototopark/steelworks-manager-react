@@ -48,6 +48,19 @@ export default function WhiteboardPage() {
     loadTasks();
   }, [loadTasks]);
 
+  // Fetch default active date if empty on mount
+  useEffect(() => {
+    if (!filterDate) {
+      apiClient.get('/api/tasks/active-date')
+        .then(res => {
+          if (res.data && res.data.status === 'success' && res.data.date) {
+            setFilterDate(res.data.date);
+          }
+        })
+        .catch(err => console.error("Failed to load default active date", err));
+    }
+  }, []);
+
   // Load dev config
   useEffect(() => {
     apiClient.get('/api/config/dev_features')

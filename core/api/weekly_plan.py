@@ -44,6 +44,14 @@ async def get_active_tasks_api(date: Optional[str] = None):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/api/tasks/active-date")
+async def get_active_tasks_date_api():
+    try:
+        res = db_client.fetch_one("SELECT expiry_date FROM tb_tasks WHERE expiry_date IS NOT NULL ORDER BY expiry_date DESC LIMIT 1")
+        return {"status": "success", "date": res["expiry_date"] if res else None}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.post("/api/tasks")
 async def create_task_api(payload: TaskCreate):
     try:
